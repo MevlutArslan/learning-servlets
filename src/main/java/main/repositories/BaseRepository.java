@@ -11,6 +11,8 @@ public interface BaseRepository<T> {
 
     void remove(T course);
 
-    void update(T instanceToUpdate);
+    void update(T updatedInstance);
+
+    List<T> getAll();
 
 }
