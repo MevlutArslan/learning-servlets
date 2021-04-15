@@ -1,13 +1,15 @@
 package main.models;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Course {
     private String id;
     private String name;
     private Instructor instructor;
-    private List<Student> students;
+    private List<Student> enrolledStudents;
 
     public Course(){}
 
@@ -23,12 +25,15 @@ public class Course {
 
     public String generateId(){
         StringBuilder sb = new StringBuilder();
-        sb.append(name.charAt(0));
 
-        if(name.contains(" ")){
-            for(int i = 0; i < name.length(); i++){
-                if(name.charAt(i) == ' '){
-                    sb.append(name.charAt(i+1));
+        String tempName = name.toUpperCase(Locale.ROOT);
+
+        sb.append(tempName.charAt(0));
+
+        if(tempName.contains(" ")){
+            for(int i = 0; i < tempName.length(); i++){
+                if(tempName.charAt(i) == ' '){
+                    sb.append(tempName.charAt(i+1));
                 }
             }
         }
@@ -39,19 +44,19 @@ public class Course {
     }
 
     public void enrollStudent(Student student){
-        this.students.add(student);
+        this.enrolledStudents.add(student);
     }
 
     public void removeStudent(Student student){
-        this.students.remove(student);
+        this.enrolledStudents.remove(student);
     }
 
     public List<Student> getStudents() {
-        return students;
+        return enrolledStudents;
     }
 
     public int getNumberOfStudents(){
-        return students.size();
+        return enrolledStudents.size();
     }
 
     public String getName() {
@@ -68,5 +73,18 @@ public class Course {
 
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id.equals(course.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

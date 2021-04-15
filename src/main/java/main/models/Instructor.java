@@ -1,10 +1,12 @@
 package main.models;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Instructor {
     private final UUID id;
+
     private String name;
     private String surname;
     private String title;
@@ -61,5 +63,18 @@ public class Instructor {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instructor that = (Instructor) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

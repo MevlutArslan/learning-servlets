@@ -1,13 +1,14 @@
 package main.models;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Student {
+    private final UUID id;
 
     private String name;
     private String surname;
-    private final UUID id;
     private List<Course> courseList;
 
 
@@ -51,5 +52,18 @@ public class Student {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return id.equals(student.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
