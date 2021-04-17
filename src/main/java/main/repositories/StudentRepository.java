@@ -3,11 +3,12 @@ package main.repositories;
 import main.models.Student;
 import main.utils.NotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepository implements BaseRepository<Student> {
 
-    List<Student> studentList;
+    private final List<Student> studentList = new ArrayList<>();
 
     @Override
     public Student findByName(String name) throws NotFoundException {

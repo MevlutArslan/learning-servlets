@@ -4,11 +4,12 @@ import main.models.Instructor;
 import main.models.Student;
 import main.utils.NotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstructorRepository implements BaseRepository<Instructor> {
 
-    List<Instructor> instructorList;
+    private final List<Instructor> instructorList = new ArrayList<>();
 
     @Override
     public Instructor findByName(String name) throws NotFoundException {
