@@ -1,7 +1,8 @@
 package main.servlets;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import main.models.Student;
 import main.repositories.StudentRepository;
 
@@ -11,9 +12,6 @@ import javax.servlet.annotation.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.List;
 
 @WebServlet(name = "StudentServlet", value = "/api/students/")
 public class StudentServlet extends HttpServlet {
@@ -38,9 +36,25 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // A post request to this endpoint should add a new student to the database.
+        StringBuilder sb = new StringBuilder();
 
+        try (BufferedReader reader = request.getReader()) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+        }
 
+        // Handles the json body sent within the request
+        JsonObject jsonObject = JsonParser.parseString(sb.toString()).getAsJsonObject();
+
+        studentRepository.add(new Student(
+                jsonObject.get("name").getAsString(),
+                jsonObject.get("surname").getAsString()
+            )
+        );
 
     }
-    
+
 }
