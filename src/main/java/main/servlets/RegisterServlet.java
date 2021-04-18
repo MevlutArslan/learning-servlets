@@ -28,8 +28,6 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(courseRepository.getAll());
-
         StringBuilder sb = new StringBuilder();
 
         try (BufferedReader reader = request.getReader()) {
