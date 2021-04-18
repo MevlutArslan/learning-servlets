@@ -1,5 +1,6 @@
 package main.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -9,13 +10,14 @@ public class Student {
 
     private String name;
     private String surname;
-    private List<Course> courseList;
+    private final List<String> courseList;
 
 
     public Student(String name, String surname) {
         this.name = name;
         this.surname = surname;
         this.id = generateStudentId();
+        courseList = new ArrayList<>();
     }
 
     private UUID generateStudentId() {
@@ -26,16 +28,16 @@ public class Student {
         return id;
     }
 
-    public List<Course> getCourseList() {
+    public List<String> getCourseList() {
         return courseList;
     }
 
-    private void addCourse(Course course){
-        this.courseList.add(course);
+    public void addCourse(String courseId){
+        this.courseList.add(courseId);
     }
 
-    private void removeCourse(Course course){
-        this.courseList.remove(course);
+    public void removeCourse(String courseId){
+        this.courseList.remove(courseId);
     }
 
     public String getName() {

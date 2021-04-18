@@ -1,23 +1,21 @@
 package main.models;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Course {
     private String id;
     private String name;
     private Instructor instructor;
-    private List<Student> enrolledStudents;
+    private final List<UUID> enrolledStudents;
 
-    public Course(){}
 
-    public Course(String name, Instructor instructor) {
+    public Course(String name) {
         this.name = name;
-        this.instructor = instructor;
         this.id = generateId();
+        enrolledStudents = new ArrayList<>();
     }
+
+
 
     public String getId() {
         return id;
@@ -43,15 +41,15 @@ public class Course {
         return sb.toString();
     }
 
-    public void enrollStudent(Student student){
-        this.enrolledStudents.add(student);
+    public void enrollStudent(UUID studentId){
+        this.enrolledStudents.add(studentId);
     }
 
     public void removeStudent(Student student){
         this.enrolledStudents.remove(student);
     }
 
-    public List<Student> getStudents() {
+    public List<UUID> getStudents() {
         return enrolledStudents;
     }
 
