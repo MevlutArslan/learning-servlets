@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import main.models.Student;
 import main.repositories.StudentRepository;
+import main.utils.NotFoundException;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -13,21 +14,35 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "StudentServlet", value = "/api/students/")
+@WebServlet(name = "StudentServlet", urlPatterns = {"/api/students/*"})
 public class StudentServlet extends HttpServlet {
 
     StudentRepository studentRepository = new StudentRepository();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        Type listType = new TypeToken<List<Student>>(){}.getType()
-        Gson gson = new Gson();
 
-        String students = gson.toJson(studentRepository.getAll());
+        String pathInfo = request.getPathInfo();
 
         PrintWriter printWriter = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+        Gson gson = new Gson();
+
+        Student student;
+
+        if (pathInfo.length() > 1){
+            try {
+                student = studentRepository.findByName(pathInfo.substring(1));
+                printWriter.write(gson.toJson(student));
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+        String students = gson.toJson(studentRepository.getAll());
 
         printWriter.write(students);
 
