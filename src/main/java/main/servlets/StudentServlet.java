@@ -3,6 +3,7 @@ package main.servlets;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import main.utils.DatabaseHolder;
 import main.models.Student;
 import main.repositories.StudentRepository;
 import main.utils.NotFoundException;
@@ -17,7 +18,7 @@ import java.io.PrintWriter;
 @WebServlet(name = "StudentServlet", urlPatterns = {"/api/students/*"})
 public class StudentServlet extends HttpServlet {
 
-    StudentRepository studentRepository = new StudentRepository();
+    StudentRepository studentRepository = DatabaseHolder.studentRepository;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
